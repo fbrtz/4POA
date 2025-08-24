@@ -1,9 +1,8 @@
-package AgendaContatos.view;
-
-import AgendaContatos.controller.AgendaController;
-import AgendaContatos.model.Contato;
+package view;
+import controller.AgendaController;
 import java.util.ArrayList;
 import java.util.Scanner;
+import model.Contato;
 
 public class AgendaView {
     @SuppressWarnings("FieldMayBeFinal")

@@ -1,7 +1,9 @@
-package AgendaContatos.controller;
-import AgendaContatos.model.*;
+package controller;
+import model.*;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class AgendaController{
     private ArrayList<Contato> contatos;

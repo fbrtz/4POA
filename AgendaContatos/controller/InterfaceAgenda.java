@@ -1,5 +1,5 @@
-package AgendaContatos.controller;
-import AgendaContatos.model.Contato;
+package controller;
+import model.Contato;
 import java.util.List;
     
     public interface InterfaceAgenda {

@@ -1,5 +1,5 @@
-import AgendaContatos.controller.AgendaController;
-import AgendaContatos.view.AgendaView;
+import controller.AgendaController;
+import view.AgendaView;
 
 public class principal {
     public static void main(String[] args) {
