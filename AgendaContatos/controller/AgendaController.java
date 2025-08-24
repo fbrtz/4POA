@@ -1,19 +1,26 @@
 package controller;
-import model.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.*;
 
 
 
 public class AgendaController{
+    @SuppressWarnings("FieldMayBeFinal")
     private ArrayList<Contato> contatos;
+    @SuppressWarnings("FieldMayBeFinal")
     private ContatoDoc contatodoc;
     
     
 
+    public AgendaController() {
+        this.contatodoc = new ContatoDoc();
+        this.contatos = new ArrayList<>(contatodoc.carregarContatos());
+    }
+
+
     public List<Contato> buscarPorNome(String nome){
         List<Contato> resultado = new ArrayList<>();
-        contatos = new ArrayList<>(contatodoc.carregarContatos());
         
         for(Contato contato : contatos){
             if(contato.getNome().equalsIgnoreCase(nome)){

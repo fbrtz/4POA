@@ -27,7 +27,7 @@ public class Contato {
     
     @Override
     public String toString() {
-        return ("Nome: " + nome + "| Telefone: " + telefone);
+        return String.format("Nome: %-15s | Telefone: %s", nome, telefone);
     }
 
     public String toFileString() {

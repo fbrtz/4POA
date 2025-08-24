@@ -54,9 +54,11 @@ public class AgendaView {
     }
 
     public void listarContatos(){
-        System.out.println("\n\n\n");
-        controller.listarContatos().forEach(contato -> 
-            System.out.println("Nome: " + contato.getNome() + "| Telefone: " + contato.getTelefone()));
+        ArrayList<Contato> contatos = new ArrayList<>(controller.listarContatos());
+
+        for (int i = 0; i < contatos.size(); i++) {
+            System.out.println((i + 1) + ". " + contatos.get(i));
+        }
     }
 
     public void alterarContato(){
@@ -77,7 +79,7 @@ public class AgendaView {
             System.out.println((i + 1) + ". " + contatos.get(i));
         }
 
-        System.out.print("Escolha qual deseja editar: ");
+        System.out.print("Escolha qual deseja apagar: ");
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
