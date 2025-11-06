@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>PuzzleManager - Votação</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/PuzzleManager/css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>Votação de Próximo Quebra-Cabeça</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>Votar</h2>
+      <div id="vote-area">
+        <p class="small">Carregando sessão de votação...</p>
+      </div>
+      <div id="vote-message" class="small" style="margin-top:10px;color:green;"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <a href="index.html">Voltar</a>
+  </footer>
+
+  <script>
+    async function loadSession() {
+      const area = document.getElementById('vote-area');
+      const msg = document.getElementById('vote-message');
+      msg.textContent = '';
+      try {
+        const res = await fetch('/PuzzleManager/vote?api=true');
+        const json = await res.json();
+
+        area.innerHTML = '';
+
+        if (!json.active) {
+          area.innerHTML = '<p class="small">Não há votação ativa no momento.</p>';
+          return;
+        }
+
+        // montar formulário de votação
+        let html = `<form method="post" action="/PuzzleManager/vote">
+          <input type="hidden" name="sessionId" value="${json.sessionId}" />
+          <div class="form-row">
+            <label for="username">Seu nome (username)</label>
+            <input id="username" name="username" type="text" required />
+          </div>
+          <div class="form-row">
+            <label for="puzzleId">Escolha uma opção</label>
+            <select id="puzzleId" name="puzzleId" required>
+              <option value="">-- selecione --</option>`;
+
+        json.options.forEach(opt => {
+          html += `<option value="${opt.id}">${opt.title} (${opt.pieces || 'x'} peças)</option>`;
+        });
+
+        html += `</select></div>
+          <button class="btn" type="submit">Votar</button>
+        </form>`;
+
+        area.innerHTML = html;
+
+        // checa se existe parâmetro de erro ou mensagem
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const msgParam = urlParams.get('msg');
+
+        if (error) {
+          if (error === 'missing') msg.textContent = 'Preencha todos os campos.';
+          else if (error === 'already') msg.textContent = 'Você já votou nesta sessão.';
+          else msg.textContent = 'Ocorreu um erro interno. Tente novamente.';
+          msg.style.color = 'red';
+        } else if (msgParam === 'voted') {
+          msg.textContent = 'Voto registrado com sucesso!';
+          msg.style.color = 'green';
+        }
+
+      } catch (e) {
+        console.error(e);
+        area.innerHTML = '<p class="small">Erro ao carregar sessão de votação.</p>';
+      }
+    }
+
+    window.onload = loadSession;
+  </script>
+</body>
+</html>

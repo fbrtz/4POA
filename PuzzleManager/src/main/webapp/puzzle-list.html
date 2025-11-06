@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>PuzzleManager - Histórico</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/PuzzleManager/css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>Histórico de Quebra-Cabeças</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="list" class="card">
+      <h2>Quebra-cabeças já montados / em andamento</h2>
+      <div id="puzzles" class="grid"></div>
+      <p class="small">Atualize a página para ver alterações.</p>
+    </div>
+  </main>
+
+  <footer class="footer"><a href="index.html">Voltar</a></footer>
+
+  <script>
+    async function load() {
+      try {
+        const res = await fetch('/PuzzleManager/api/puzzles');
+        const data = await res.json();
+        const container = document.getElementById('puzzles');
+        container.innerHTML = '';
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="card small">Nenhum quebra-cabeça cadastrado.</div>';
+          return;
+        }
+        data.forEach(p => {
+          const el = document.createElement('div');
+          el.className = 'card puzzle-card';
+          el.innerHTML = `
+            <img src="${p.imageUrl || 'https://via.placeholder.com/400x200?text=Puzzle'}" alt="${p.title}">
+            <h3>${p.title}</h3>
+            <p class="small">Peças: ${p.pieces || '-'}</p>
+            <p class="small">Último início: ${p.startDate || '-'}</p>
+            <p class="small">Concluído: ${p.complete ? 'Sim' : 'Não'}</p>
+          `;
+          container.appendChild(el);
+        });
+      } catch (e) {
+        console.error(e);
+        document.getElementById('puzzles').innerHTML = '<div class="small">Erro ao carregar.</div>';
+      }
+    }
+    load();
+  </script>
+</body>
+</html>

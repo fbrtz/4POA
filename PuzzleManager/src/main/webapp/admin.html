@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>PuzzleManager - Administração</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/PuzzleManager/css/styles.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>Área da Secretaria</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h2>Login Administrativo</h2>
+      <form method="post" action="/PuzzleManager/admin">
+        <input type="hidden" name="action" value="login">
+        <div class="form-row"><label>Usuário</label><input name="username" type="text" required></div>
+        <div class="form-row"><label>Senha</label><input name="password" type="password" required></div>
+        <button class="btn" type="submit">Entrar</button>
+      </form>
+      <hr/>
+      <h3>Cadastrar novo quebra-cabeça (rápido)</h3>
+      <form method="post" action="/PuzzleManager/admin">
+        <input type="hidden" name="action" value="createPuzzle">
+        <div class="form-row"><label>Título</label><input name="title" type="text" required></div>
+        <div class="form-row"><label>URL da Imagem</label><input name="imageUrl" type="text"></div>
+        <div class="form-row"><label>Peças</label><input name="pieces" type="number" required></div>
+        <button class="btn" type="submit">Cadastrar</button>
+      </form>
+
+      <hr/>
+      <h3>Abrir votação</h3>
+      <p class="small">Informe IDs dos puzzles separados por vírgula (ex.: 1,2,3) e um título para a sessão.</p>
+      <form method="post" action="/PuzzleManager/admin">
+        <input type="hidden" name="action" value="openVoting">
+        <div class="form-row"><label>Título da votação</label><input name="title" type="text" required></div>
+        <div class="form-row"><label>IDs das opções</label><input name="optionIds" type="text" placeholder="1,2,3" required></div>
+        <button class="btn" type="submit">Abrir votação</button>
+      </form>
+
+      <hr/>
+      <h3>Encerrar votação</h3>
+      <form method="post" action="/PuzzleManager/admin">
+        <input type="hidden" name="action" value="closeVoting">
+        <div class="form-row"><label>Session ID</label><input name="sessionId" type="number" required></div>
+        <button class="btn" type="submit">Encerrar</button>
+      </form>
+	</div>
+  </main>
+</body>
+</html>
